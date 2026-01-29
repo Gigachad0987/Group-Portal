@@ -1,0 +1,12 @@
+{%extends "base.html"%}
+{%block content%}
+<p>user {{UserProfile}}</p>
+<h1>{{UserProfile.user.username}}'s profile</h1>
+{%if UserProfile.avatar%}
+<img class="logo" src="{{UserProfile.avatar.url}}">
+{%endif%}
+<p>{{UserProfile.bio}}</p>
+<p>Role: {{UserProfile.role}}</p>
+<p><a href="#">Portfolio</a></p>
+<p><a href="#">Edit</a></p>
+{%endblock%}

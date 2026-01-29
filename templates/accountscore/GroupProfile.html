@@ -1,0 +1,18 @@
+{%extends "base.html"%}
+{%block content%}
+<h1>{{GroupProfile.name}}</h1>
+{%if GroupProfile.logo%}
+<img class="logo" src="{{GroupProfile.logo.url}}">
+{%endif%}
+<p>{{GroupProfile.description}}</p>
+<h3>Group Members</h3>
+{%if users%}
+<ul class="list-group">
+    {%for user in users%}
+    <li class="list-group-item">{{user.username}} <a class="btn btn-sm btn-secondary"href="#">Portfolio</a></li>
+    {%endfor%}
+</ul>
+{%else%}
+<p>No any members</p>
+{%endif%}
+{%endblock%}
