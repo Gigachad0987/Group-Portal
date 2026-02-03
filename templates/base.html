@@ -35,11 +35,16 @@
                     <a class="nav-link" href="{%url 'UserProfile'%}">My Profile</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Log out</a>
+
+                    <form method="post" action="{%url 'logout'%}" class="d-inline">
+                      {%csrf_token%}
+                      <button type="submit">Logout</button>
+
+                    </form>
                   </li>
                   {%else%}
                   <li>
-                    <a class="nav-link" href="#">Log in</a>
+                    <a class="nav-link" href="{%url 'login'%}">Log in</a>
                   </li>
                   {%endif%}
                 </ul>

@@ -10,7 +10,7 @@ class GroupProfile(models.Model):
         return self.name
     
 class UserProfile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="profile")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     avatar = models.ImageField(upload_to="user_avatar/", null=True, blank=True)
     bio = models.TextField()
     rols = [
