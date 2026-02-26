@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+
+    <!-- Page title -->
+    <div class="mb-4">
+        <h2 class="mb-1">
+            {% if form.instance.pk %}
+                Edit topic
+            {% else %}
+                Create new topic
+            {% endif %}
+        </h2>
+        <p class="text-muted mb-0">
+            Fill in the information about the topic for discussion
+        </p>
+    </div>
+
+    <!-- Form card -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="post" class="col-lg-8">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+
+                <!-- Title -->
+                <div class="mb-3">
+                    <label for="{{ form.title.id_for_label }}" class="form-label">
+                        Topic name
+                    </label>
+                    {{ form.title }}
+                    {{ form.title.errors }}
+                </div>
+
+                <!-- Description -->
+                <div class="mb-3">
+                    <label for="{{ form.description.id_for_label }}" class="form-label">
+                        Topic description
+                    </label>
+                    {{ form.description }}
+                    <div class="form-text">
+                        Briefly describe what the discussion will be about
+                    </div>
+                    {{ form.description.errors }}
+                </div>
+
+                <!-- Actions -->
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        {% if form.instance.pk %}Save changes{% else %}Create a topic{% endif %}
+                    </button>
+
+                    <a href="{% url 'forum:topic_list' %}" class="btn btn-outline-secondary">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
