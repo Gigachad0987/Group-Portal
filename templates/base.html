@@ -29,7 +29,7 @@
                     <a class="nav-link" href="#">Study Materials</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Anoucements</a>
+                    <a class="nav-link" href="{%url 'Announcement_List'%}">Anouncements</a>
                   {%if user.is_authenticated%}
                   <li class="nav-item">
                     <a class="nav-link" href="{%url 'UserProfile'%}">My Profile</a>

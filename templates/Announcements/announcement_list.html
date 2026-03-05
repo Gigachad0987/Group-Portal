@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{%block content%}
+<h1>Announcements</h1>
+<p><a href="{%url 'Announcement_Create'%}">Create</a></p>
+<ul>
+    {%for announcement in Announcements%}
+    <li>
+    <p><a href="{%url 'Announcement_Details' announcement.pk%}">{{announcement.name}}</a></p>
+    <p>{{announcement.title}}</p>
+    <p>Posted at: {{announcement.uploaded_time}} by {{announcement.created_by}}</p>
+    </li>
+    {%empty%}
+    <li>No any tasks yet.</li>
+    {%endfor%}
+</ul>
+
+
+
+
+{%endblock%}

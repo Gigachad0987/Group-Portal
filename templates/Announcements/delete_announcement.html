@@ -1,0 +1,11 @@
+{%extends "base.html"%}
+{%block content%}
+<h1>Delete youre anouncement:[</h1>
+<p>Are you sure you want to delete? {{object.name}}</p>
+<form method="POST">
+    {%csrf_token%}
+    <button type="submit">Delete</button>
+    <a href="{%url 'Announcement_List'%}">Cancel</a>
+</form>
+
+{%endblock%}
