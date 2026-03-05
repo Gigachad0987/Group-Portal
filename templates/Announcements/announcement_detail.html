@@ -1,0 +1,11 @@
+{%extends "base.html"%}
+{%block content%}
+<h1>{{Announcement.name}}</h1>
+<p>{{Announcement.title}}</p>
+<p>By: {{Announcement.created_by}}</p>
+<p>{{Announcement.content}}</p>
+{%if Announcement.created_by == request.user%}
+<a href="{%url 'Announcement_Update' Announcement.pk%}">Edit</a>
+<a href="{%url 'Announcement_Delete' Announcement.pk%}">Delete</a>
+{%endif%}
+{%endblock%}
