@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+
+    <!-- Topic header -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h2 class="card-title mb-2">{{ topic.title }}</h2>
+
+            {% if topic.description %}
+                <p class="card-text">
+                    {{ topic.description|linebreaks }}
+                </p>
+            {% endif %}
+
+            <small class="text-muted">
+                Created at {{ topic.created_at|date:"d.m.Y H:i" }}
+                • Author: {{ topic.created_by.username }}
+            </small>
+        </div>
+    </div>
+
+    <!-- Posts -->
+    <h5 class="mb-3">Повідомлення</h5>
+
+    {% if posts %}
+        <div class="d-flex flex-column gap-3 mb-4">
+            {% for post in posts %}
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <p class="card-text mb-3">
+                            {{ post.content|linebreaks }}
+                        </p>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                {{ post.created_by.username }}
+                                • {{ post.created_at|date:"d.m.Y H:i" }}
+                            </small>
+
+                            {% if user.is_authenticated and user.profile %}
+                                {% if user == post.created_by or user.profile.role == 'moderator' or user.profile.role == 'admin' %}
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{% url 'forum:post_edit' topic.pk post.pk %}"
+                                           class="btn btn-outline-secondary">
+                                            Edit
+                                        </a>
+                                        <a href="{% url 'forum:post_delete' topic.pk post.pk %}"
+                                           class="btn btn-outline-danger">
+                                            Delete
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            There are no messages in this topic yet.
+        </div>
+    {% endif %}
+
+    <!-- Add post -->
+    {% if user.is_authenticated %}
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Add new message</h5>
+
+                <form method="post" action="{% url 'forum:post_create' topic.pk %}">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+
+                    <div class="mb-3">
+                        <label for="{{ form.content.id_for_label }}" class="form-label">
+                            Message
+                        </label>
+                        {{ form.content }}
+                        {{ form.content.errors }}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Publish
+                    </button>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-warning">
+            Please, <a href="{% url 'login' %}">login</a>, to write a message.
+        </div>
+    {% endif %}
+
+    <a href="{% url 'forum:topic_list' %}" class="btn btn-secondary">
+        ← Back to the list of topics
+    </a>
+
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+
+    <!-- Page header -->
+    <div class="mb-4">
+        <h2 class="mb-1 text-danger">Confirm deletion</h2>
+        <p class="text-muted mb-0">
+            This action cannot be undone.
+        </p>
+    </div>
+
+    <!-- Confirmation card -->
+    <div class="card border-danger shadow-sm mb-4">
+        <div class="card-body">
+            <p class="mb-3">
+                Are you sure you want to delete this topic?
+            </p>
+
+            {% if object.content %}
+                <div class="alert alert-light border">
+                    <p class="mb-0">
+                        {{ object.content|truncatewords:50|linebreaksbr }}
+                    </p>
+                </div>
+            {% else %}
+                <p class="text-muted mb-0">
+                    The message contains no text.
+                </p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <form method="post" class="d-flex gap-2">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">
+            Yes, delete
+        </button>
+        <a href="{% url 'forum:topic_list' %}"
+           class="btn btn-outline-secondary">
+            Cancel
+        </a>
+    </form>
+
+</div>
+{% endblock %}

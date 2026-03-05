@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="mb-1">Forum</h1>
+            <p class="text-muted mb-0">
+                Discuss different topics with other group members.
+            </p>
+        </div>
+
+        {% if user.is_authenticated and user.profile.role in 'admin,moderator' %}
+            <a href="{% url 'forum:topic_create' %}" class="btn btn-primary">
+                + Create new topic
+            </a>
+        {% endif %}
+    </div>
+
+    <!-- Topics list -->
+    {% if topics %}
+        <div class="list-group shadow-sm">
+            {% for topic in topics %}
+                <a href="{% url 'forum:topic_detail' pk=topic.pk %}"
+                   class="list-group-item list-group-item-action py-3">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h5 class="mb-1">{{ topic.title }}</h5>
+                            <small class="text-muted">
+                                by {{ topic.created_by.username }}
+                                • {{ topic.created_at|date:"d.m.Y H:i" }}
+                            </small>
+                        </div>
+
+                        <span class="badge bg-secondary rounded-pill">
+                            {{ topic.posts.count }} posts
+                        </span>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            There are currently no topics for discussion.
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}
